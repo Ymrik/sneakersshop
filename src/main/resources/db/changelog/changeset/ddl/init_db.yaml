@@ -1,0 +1,412 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-db
+      author: Umar
+      changes:
+        - createTable:
+            tableName: d_categories
+            remarks: Справочник категорий обуви
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: category_pk
+              - column:
+                  name: code
+                  type: nvarchar(10)
+                  constraints:
+                    unique: true
+              - column:
+                  name: name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: nvarchar
+                  constraints:
+                    nullable: true
+        - createTable:
+            tableName: d_brands
+            remarks: Справочник брэндов обуви
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: brand_pk
+              - column:
+                  name: code
+                  type: nvarchar(10)
+                  constraints:
+                    unique: true
+              - column:
+                  name: name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: nvarchar
+                  constraints:
+                    nullable: true
+        - createTable:
+            tableName: d_sex
+            remarks: Справочник полов пользователей
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: sex_pk
+              - column:
+                  name: code
+                  type: nvarchar(10)
+                  constraints:
+                    unique: true
+              - column:
+                  name: name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: d_roles
+            remarks: Справочник ролей пользователей
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: role_pk
+              - column:
+                  name: name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: d_order_statuses
+            remarks: Справочник статусов заказов
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: order_status_pk
+              - column:
+                  name: code
+                  type: nvarchar(10)
+                  constraints:
+                    unique: true
+              - column:
+                  name: name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ordinal
+                  type: int
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: stockrooms
+            remarks: Склады
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: stockroom_pk
+              - column:
+                  name: address
+                  type: nvarchar
+                  constraints:
+                    unique: true
+              - column:
+                  name: name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: d_shoe_models
+            remarks: Справочник моделей обуви
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: shoe_model_pk
+              - column:
+                  name: category
+                  type: nvarchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: shoe_model_category_fk
+                    references: d_categories(code)
+              - column:
+                  name: brand
+                  type: nvarchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: shoe_model_brand_fk
+                    references: d_brands(code)
+              - column:
+                  name: model_name
+                  type: nvarchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sex
+                  type: nvarchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: shoe_model_sex_fk
+                    references: d_sex(code)
+              - column:
+                  name: cost
+                  type: currency
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_premium
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_adult
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: nvarchar
+                  constraints:
+                    nullable: true
+        - createTable:
+            tableName: shoes_in_stock
+            remarks: Обувь на складе
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: shoe_in_stock_pk
+              - column:
+                  name: shoe_model_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: shoe_in_stock_model_id
+                    references: d_shoe_models(id)
+              - column:
+                  name: stockroom_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: shoe_in_stock_stockroom_fk
+                    references: stockrooms(id)
+        - createTable:
+            tableName: users
+            remarks: Пользователи
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_pk
+              - column:
+                  name: username
+                  type: nvarchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: nvarchar(200)
+        - createTable:
+            tableName: user_roles
+            remarks: Роли пользователей
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_role_pk
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: user_role_user_fk
+                    references: users(id)
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: user_role_role_fk
+                    references: d_roles(id)
+        - createTable:
+            tableName: clients
+            remarks: Клиенты
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: client_pk
+              - column:
+                  name: username
+                  type: nvarchar(50)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: client_user_fk
+                    references: users(username)
+              - column:
+                  name: name
+                  type: nvarchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: nvarchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: birth_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sex
+                  type: nvarchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: client_sex_fk
+                    references: d_sex(code)
+              - column:
+                  name: phone_number
+                  type: nvarchar(11)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: email
+                  type: nvarchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: preferred_delivery_address
+                  type: nvarchar(200)
+                  constraints:
+                    nullable: true
+        - createTable:
+            tableName: orders
+            remarks: Заказы
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: order_pk
+              - column:
+                  name: client_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: order_client_fk
+                    references: clients(id)
+              - column:
+                  name: delivery_address
+                  type: nvarchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_status
+                  type: nvarchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: order_order_status_fk
+                    references: d_order_statuses(code)
+        - createTable:
+            tableName: order_shoes
+            remarks: Обувь в заказе
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: order_shoe_pk
+              - column:
+                  name: order_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: order_shoes_order_fk
+                    references: orders(id)
+              - column:
+                  name: shoes_in_stock_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: order_shoes_shoe_in_stock_fk
+                    references: shoes_in_stock(id)
+              - column:
+                  name: count
+                  type: int
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: client_favourites
+            remarks: Избранное клиентов
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: client_favourite_pk
+              - column:
+                  name: client_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: client_favourite_client_fk
+                    references: clients(id)
+              - column:
+                  name: shoe_model_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: client_favourite_shoe_model_fk
+                    references: d_shoe_models(id)
+        - addUniqueConstraint:
+            tableName: client_favourites
+            columnNames: client_id, shoe_model_id
+            constraintName: client_favourites_client_model_uk
