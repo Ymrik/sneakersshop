@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_seasons
+      author: Umar
+      changes:
+        - createTable:
+            tableName: d_seasons
+            remarks: Справочник сезонов
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: seasons_pk
+              - column:
+                  name: code
+                  type: nvarchar(10)
+                  constraints:
+                    unique: true
+              - column:
+                  name: name
+                  type: nvarchar
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: d_shoe_models
+            columns:
+              - column:
+                  name: seasons
+                  type: nvarchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: shoe_models_seasons_fk
+                    references: d_seasons(code)

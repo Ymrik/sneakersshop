@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-photo-url
+      author: Umar
+      changes:
+        - addColumn:
+            tableName: d_shoe_models
+            columns:
+              - column:
+                  name: photo_url
+                  type: nvarchar
+                  constraints:
+                    nullable: true
+        - addColumn:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: photo_url
+                  type: nvarchar
+                  constraints:
+                    nullable: true
+        - addColumn:
+            tableName: d_brands
+            columns:
+              - column:
+                  name: photo_url
+                  type: nvarchar
+                  constraints:
+                    nullable: true

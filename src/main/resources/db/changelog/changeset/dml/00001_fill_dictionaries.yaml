@@ -1,0 +1,338 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-dictionaries
+      author: Umar
+      changes:
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: BALLET
+              - column:
+                  name: name
+                  value: Балетки
+              - column:
+                  name: description
+                  value: Классическая модель женских туфель с закрытым носком на плоской подошве или с маленьким устойчивым каблуком
+              - column:
+                  name: photo_url
+                  value: https://big-boots.ru/upload/iblock/e49/wb7jtd0wv1n4nprf3ylszidj06s6ovsp.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: SANDALS
+              - column:
+                  name: name
+                  value: Сандали и босоножки
+              - column:
+                  name: description
+                  value: Вид обуви для тёплых времён года, который не полностью закрывает ступню и голеностопный сустав и который носится на босую ногу4
+              - column:
+                  name: photo_url
+                  value: https://ralf.ru/upload/resize_cache/iblock/dfd/581_581_1/dfd2d36ee5f031ea8cf790a24b7b5990.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: ANKLE_BOOT
+              - column:
+                  name: name
+                  value: Ботильоны
+              - column:
+                  name: description
+                  value: Женские полусапожки на высоком каблуке
+              - column:
+                  name: photo_url
+                  value: https://bossy-lady.ru/media/products/5453/files/tmp/%D0%91%D0%9E%D0%A1%D0%98%D0%98_%D0%9E%D0%9A%D0%A2%D0%AF%D0%91%D0%A0%D0%AC20397_oLltsMZ.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: BOOTS
+              - column:
+                  name: name
+                  value: Ботинки
+              - column:
+                  name: description
+                  value: Обувь, закрывающая ногу по щиколотку
+              - column:
+                  name: photo_url
+                  value: https://ralf.ru/upload/resize_cache/iblock/1ab/1500_1500_1/1abefdcab27248638fbd2395dd75be5b.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: EVENING
+              - column:
+                  name: name
+                  value: Вечерняя обувь
+              - column:
+                  name: description
+                  value: Обувь для особых поводов
+              - column:
+                  name: photo_url
+                  value: https://basconi-obuv.ru/image/cache/catalog/files/MP002XW0CFWF_16868388_2_v1-600x866.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: HOME
+              - column:
+                  name: name
+                  value: Домашняя обувь
+              - column:
+                  name: description
+                  value: Удобная обувь для дома
+              - column:
+                  name: photo_url
+                  value: https://img.joomcdn.net/abc8af08359b1fa265b38643920d1db5a854c222_original.jpeg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: SNEAKERS
+              - column:
+                  name: name
+                  value: Кроссовки и кеды
+              - column:
+                  name: description
+                  value: Спортивная обувь
+              - column:
+                  name: photo_url
+                  value: https://cdn.urbanvibes.com/upload/mdm/media_content/resize/e67/1000_1000_354e/83678160299.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: MOCCASINS
+              - column:
+                  name: name
+                  value: Мокасины
+              - column:
+                  name: description
+                  value: Мягкие туфли без каблука, кожаные или замшевые
+              - column:
+                  name: photo_url
+                  value: https://robek.ru/public/PicturesNew//%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D1%8B%D0%B5/%D1%80%D0%B8%D0%B2%D0%B5%D1%80%D0%B8/892102%D0%B403%D0%B1_%D1%86%D0%B1239341/0.webp
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: WELLINGTON
+              - column:
+                  name: name
+                  value: Сапоги
+              - column:
+                  name: description
+                  value: Вид обуви с высокими голенищами
+              - column:
+                  name: photo_url
+                  value: https://belwest.ru/images/he8/h4f/9179422621726.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: SLIP-ONS
+              - column:
+                  name: name
+                  value: Слипоны
+              - column:
+                  name: description
+                  value: Лёгкая обувь без шнуровки
+              - column:
+                  name: photo_url
+                  value: https://afourcustom.ru/image/cache/catalog/easy-item/82/slipon-1-black-1-jpg-2-800x800.jpg
+        - insert:
+            tableName: d_categories
+            columns:
+              - column:
+                  name: code
+                  value: SHOES
+              - column:
+                  name: name
+                  value: Туфли
+              - column:
+                  name: description
+                  value: Обувь, закрывающая ногу не выше щиколотки.
+              - column:
+                  name: photo_url
+                  value: https://cdn.technoavia.ru/img/product_images/7456_1.png?sc=model_zoom
+        - insert:
+            tableName: d_seasons
+            columns:
+              - column:
+                  name: code
+                  value: WINTER
+              - column:
+                  name: name
+                  value: Зимний сезон
+        - insert:
+            tableName: d_seasons
+            columns:
+              - column:
+                  name: code
+                  value: SUMMER
+              - column:
+                  name: name
+                  value: Летний сезон
+        - insert:
+            tableName: d_seasons
+            columns:
+              - column:
+                  name: code
+                  value: DEMI
+              - column:
+                  name: name
+                  value: Деми-сезон
+        - insert:
+            tableName: d_seasons
+            columns:
+              - column:
+                  name: code
+                  value: AUT/SPR
+              - column:
+                  name: name
+                  value: Весна/осень
+        - insert:
+            tableName: stockrooms
+            columns:
+              - column:
+                  name: address
+                  value: Томск, ул. Карташова, 40А
+              - column:
+                  name: name
+                  value: Склад 1
+        - insert:
+            tableName: stockrooms
+            columns:
+              - column:
+                  name: address
+                  value: Томск, пр. Фрунзе, 105
+              - column:
+                  name: name
+                  value: Склад 2
+        - insert:
+            tableName: d_sex
+            columns:
+              - column:
+                  name: code
+                  value: M
+              - column:
+                  name: name
+                  value: Мужчина
+        - insert:
+            tableName: d_sex
+            columns:
+              - column:
+                  name: code
+                  value: F
+              - column:
+                  name: name
+                  value: Женщина
+        - insert:
+            tableName: d_roles
+            columns:
+              - column:
+                  name: name
+                  value: CLIENT
+        - insert:
+            tableName: d_roles
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: CREATED
+              - column:
+                  name: name
+                  value: Заказ создан
+              - column:
+                  name: ordinal
+                  value: 1
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: FILLING
+              - column:
+                  name: name
+                  value: Заказ собирается
+              - column:
+                  name: ordinal
+                  value: 2
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: DELIVERING
+              - column:
+                  name: name
+                  value: Заказ доставляется
+              - column:
+                  name: ordinal
+                  value: 3
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: DELIVERED
+              - column:
+                  name: name
+                  value: Заказ доставлен
+              - column:
+                  name: ordinal
+                  value: 4
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: COMPLETED
+              - column:
+                  name: name
+                  value: Заказ закончен
+              - column:
+                  name: ordinal
+                  value: 5
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: RETURN
+              - column:
+                  name: name
+                  value: Возврат товара
+              - column:
+                  name: ordinal
+                  value: 6
+        - insert:
+            tableName: d_order_statuses
+            columns:
+              - column:
+                  name: code
+                  value: DECLINED
+              - column:
+                  name: name
+                  value: Заказ отменен
+              - column:
+                  name: ordinal
+                  value: 0

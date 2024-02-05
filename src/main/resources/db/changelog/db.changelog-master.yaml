@@ -1,3 +1,9 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/changeset/ddl/init_db.yaml
+      file: db/changelog/changeset/ddl/00001_init_db.yaml
+  - include:
+      file: db/changelog/changeset/ddl/00002_create_seasons_table.yaml
+  - include:
+      file: db/changelog/changeset/ddl/00003_add_photo_column.yaml
+  - include:
+      file: db/changelog/changeset/dml/00001_fill_dictionaries.yaml
