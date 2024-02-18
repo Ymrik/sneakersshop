@@ -14,28 +14,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserDetailsServiceImpl userDetailsService;
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, UserDetailsServiceImpl userDetailsService) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        httpSecurity.authorizeHttpRequests((auth) -> auth.requestMatchers("/main").permitAll());
-        httpSecurity.authenticationProvider(authenticationProvider());
-        httpSecurity.authorizeHttpRequests((auth) -> auth.requestMatchers("/login").permitAll());
-        httpSecurity.formLogin(withDefaults());
+        httpSecurity.authorizeHttpRequests((auth) -> auth.requestMatchers("/main", "/registration").permitAll());
+        httpSecurity.authenticationProvider(authenticationProvider(userDetailsService));
+        httpSecurity.formLogin((auth) -> auth.loginPage("/login").permitAll().successForwardUrl("/main"));
 
         return httpSecurity.build();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailsService) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());

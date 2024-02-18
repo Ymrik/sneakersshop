@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/changeset/ddl/00003_add_photo_column.yaml
   - include:
       file: db/changelog/changeset/dml/00001_fill_dictionaries.yaml
+  - include:
+      file: db/changelog/changeset/ddl/00004_alter_phone_number.yaml

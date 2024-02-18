@@ -1,6 +1,6 @@
 package com.umarbariev.sneakersshop.mapper;
 
-import com.umarbariev.sneakersshop.model.UserDto;
+import com.umarbariev.sneakersshop.model.dto.UserDto;
 import com.umarbariev.sneakersshop.model.entity.Role;
 import com.umarbariev.sneakersshop.model.entity.UserEntity;
 import org.mapstruct.Mapper;

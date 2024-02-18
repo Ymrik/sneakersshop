@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: alter_phone_number
+      author: Umar
+      changes:
+        - modifyDataType:
+            tableName: clients
+            columnName: phone_number
+            newDataType: varchar(12)
