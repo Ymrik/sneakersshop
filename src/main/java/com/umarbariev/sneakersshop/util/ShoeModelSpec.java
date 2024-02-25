@@ -85,7 +85,7 @@ public class ShoeModelSpec {
     }
 
     private Specification<ShoeModelEntity> isAdult(String ageCategory) {
-        if (ageCategory.equals("")) {
+        if (ageCategory == null || ageCategory.equals("")) {
             return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
         } else if(ageCategory.equals(SearchCriteria.ADULT)) {
             return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(IS_ADULT), true));

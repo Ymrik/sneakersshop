@@ -5,28 +5,28 @@
   <title>MainPage</title>
 </head>
 <body>
-<a href="">
+<a href="/">
   <button type="button">Главная</button>
 </a>
-<a href="/login">
+<a href="/men">
   <button type="button">Мужчинам</button>
 </a>
-<a href="/login">
+<a href="/women">
   <button type="button">Женщинам</button>
 </a>
-<a href="/login">
+<a href="/children">
   <button type="button">Детям</button>
 </a>
-<a href="/login">
+<a href="/winter">
   <button type="button">Зима</button>
 </a>
-<a href="/login">
+<a href="/summer">
   <button type="button">Лето</button>
 </a>
-<a href="/login">
+<a href="/spring">
   <button type="button">Весна/Осень</button>
 </a>
-<a href="/login">
+<a href="/demi">
   <button type="button">Демисезон</button>
 </a>
 <div sec:authorize="!isAuthenticated()">
@@ -48,9 +48,20 @@
 </div>
 <br>
 <i th:text="${searchCriteria.getDescription()}"></i>
-<a href="/search">
-  <button type="button">Поиск</button>
-</a>
+<form action="#" th:action="@{/searchPage}" method="post" th:object="${searchCriteria}">
+    <input type="hidden" id="nameContains" th:field="*{nameContains}"/>
+    <input type="hidden" id="category" th:field="*{category}"/>
+    <input type="hidden" id="brand" th:field="*{brand}"/>
+    <input type="hidden" id="season" th:field="*{season}"/>
+    <input type="hidden" id="sex" th:field="*{sex}"/>
+    <input type="hidden" id="minCost" th:field="*{minCost}"/>
+    <input type="hidden" id="maxCost" th:field="*{maxCost}"/>
+    <input type="hidden" id="premium" th:field="*{premium}"/>
+    <input type="hidden" id="ageCategory" th:field="*{ageCategory}"/>
+    <div class="form-actions">
+        <button type="submit" class="btn">Поиск</button>
+    </div>
+</form>
 <br>
 <table>
   <th:block th:each="shoe : ${shoes}">
