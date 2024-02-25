@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>Аккаунт</title>
+</head>
+<body>
+<a href="/">
+  <button type="button">Главная</button>
+</a>
+<a href="/men">
+  <button type="button">Мужчинам</button>
+</a>
+<a href="/women">
+  <button type="button">Женщинам</button>
+</a>
+<a href="/children">
+  <button type="button">Детям</button>
+</a>
+<a href="/winter">
+  <button type="button">Зима</button>
+</a>
+<a href="/summer">
+  <button type="button">Лето</button>
+</a>
+<a href="/spring">
+  <button type="button">Весна/Осень</button>
+</a>
+<a href="/demi">
+  <button type="button">Демисезон</button>
+</a>
+<div sec:authorize="!isAuthenticated()">
+  <a href="/login">
+    <button type="button">Войти</button>
+  </a>
+  <a href="/registration">
+    <button type="button">Регистрация</button>
+  </a>
+</div>
+<div sec:authorize="isAuthenticated()">
+  <span sec:authentication="name">Bob</span>
+  <a href="/logout">
+    <button type="button">Выйти</button>
+  </a>
+</div>
+<br>
+<label th:text="'Имя: ' + ${client.name}"></label>
+<br>
+<label th:text="'Фамилия: ' + ${client.lastName}"></label>
+<br>
+<label th:text="'Номер телефона: ' + ${client.phoneNumber}"></label>
+<br>
+<label th:text="'Почта: ' + ${client.email}"></label>
+<br>
+<label th:text="'Адрес доставки: ' + ${client.deliveryAddress}"></label>
+</body>
+</html>

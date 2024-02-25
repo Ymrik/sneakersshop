@@ -3,6 +3,7 @@ package com.umarbariev.sneakersshop.model.entity;
 import com.umarbariev.sneakersshop.model.entity.dictionary.SexEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,7 +30,7 @@ public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private UserEntity user;
 
@@ -41,7 +42,8 @@ public class ClientEntity {
 
     @Column(name = "birth_date")
     private Date birthdate;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sex", referencedColumnName = "code")
     private SexEntity sex;
 
