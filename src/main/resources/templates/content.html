@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>MainPage</title>
+</head>
+<body>
+<a href="">
+  <button type="button">Главная</button>
+</a>
+<a href="/login">
+  <button type="button">Мужчинам</button>
+</a>
+<a href="/login">
+  <button type="button">Женщинам</button>
+</a>
+<a href="/login">
+  <button type="button">Детям</button>
+</a>
+<a href="/login">
+  <button type="button">Зима</button>
+</a>
+<a href="/login">
+  <button type="button">Лето</button>
+</a>
+<a href="/login">
+  <button type="button">Весна/Осень</button>
+</a>
+<a href="/login">
+  <button type="button">Демисезон</button>
+</a>
+<div sec:authorize="!isAuthenticated()">
+  <a href="/login">
+    <button type="button">Войти</button>
+  </a>
+  <a href="/registration">
+    <button type="button">Регистрация</button>
+  </a>
+</div>
+<div sec:authorize="isAuthenticated()">
+  <span sec:authentication="name">Bob</span>
+  <a href="/login">
+    <button type="button">Личный кабинет</button>
+  </a>
+  <a href="/logout">
+    <button type="button">Выйти</button>
+  </a>
+</div>
+<br>
+<i th:text="${searchCriteria.getDescription()}"></i>
+<a href="/search">
+  <button type="button">Поиск</button>
+</a>
+<br>
+<table>
+  <th:block th:each="shoe : ${shoes}">
+    <tr>
+      <td>
+        <b th:text="${shoe.getModelName()}"></b>
+        <br>
+        <img th:src="${shoe.getPhotoUrl()}">
+        <br>
+        <b th:text="${shoe.getCost()}"></b>
+      </td>
+    </tr>
+  </th:block>
+</table>
+</body>
+</html>

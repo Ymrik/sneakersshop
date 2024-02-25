@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Поиск</title>
+</head>
+<body>
+<form action="#" th:action="@{/search}" method="post" th:object="${searchCriteria}">
+  <fieldset>
+    <legend>Пожалуйста, введите параметры поиска</legend>
+
+    <label for="nameContains">Название модели</label>
+    <input type="text" id="nameContains" th:field="*{nameContains}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('nameContains')}" th:errors="*{nameContains}"></div>
+
+    <label for="category">Категория</label>
+    <select th:field="*{category}" id="category">
+      <option hidden selected value="">Select one...</option>
+      <option th:each="category : ${categories}" th:value="${category.getCode()}" th:text="${category.getName()}"></option>
+    </select>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+
+    <label for="brand">Бренд</label>
+    <select th:field="*{brand}" id="brand">
+      <option hidden selected value="">Select one...</option>
+      <option th:each="brand : ${brands}" th:value="${brand.getCode()}" th:text="${brand.getName()}"></option>
+    </select>
+    <p class="alert alert-warning" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
+
+    <label for="season">Сезон</label>
+    <select th:field="*{season}" id="season">
+      <option hidden selected value="">Select one...</option>
+      <option th:value="'WINTER'" th:text="Зима"></option>
+      <option th:value="'SUMMER'" th:text="Лето"></option>
+      <option th:value="'AUT/SPR'" th:text="Весна-Осень"></option>
+      <option th:value="'DEMI'" th:text="Демисезон"></option>
+    </select>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('season')}" th:errors="*{season}"></div>
+
+    <label for="sex">Пол</label>
+    <select th:field="*{sex}" id="sex">
+      <option hidden selected value="">Select one...</option>
+      <option th:value="'M'" th:text="Мужчина"></option>
+      <option th:value="'F'" th:text="Женщина"></option>
+    </select>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"></div>
+
+    <label for="minCost">Цена от</label>
+    <input type="text" id="minCost" th:field="*{minCost}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('minCost')}" th:errors="*{minCost}"></div>
+
+    <label for="maxCost">Цена до</label>
+    <input type="text" id="maxCost" th:field="*{maxCost}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('maxCost')}" th:errors="*{maxCost}"></div>
+
+    <label for="isPremium">Премиум</label>
+    <input type="checkbox" id="isPremium" name="isPremium" th:checked="*{premium}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('premium')}" th:errors="*{premium}"></div>
+
+    <select th:field="*{ageCategory}">
+      <option hidden selected value="">Select one...</option>
+      <option th:value="adult">Взрослая коллекция</option>
+      <option th:value="children">Детская коллекция</option>
+    </select>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('ageCategory')}" th:errors="*{ageCategory}"></div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn">Поиск</button>
+    </div>
+  </fieldset>
+</form>
+</body>
+</html>

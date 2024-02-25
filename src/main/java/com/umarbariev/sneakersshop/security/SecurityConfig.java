@@ -22,7 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, UserDetailsServiceImpl userDetailsService) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        httpSecurity.authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/registration").permitAll());
+        httpSecurity.authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/registration", "/search").permitAll());
         httpSecurity.authenticationProvider(authenticationProvider(userDetailsService));
         httpSecurity.formLogin((auth) -> auth.loginPage("/login").permitAll().successForwardUrl("/"));
         httpSecurity.logout((logout) -> logout.logoutSuccessUrl("/"));
