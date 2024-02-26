@@ -50,21 +50,26 @@
     </a>
 </div>
 <br>
-<a href="/searchPage">
-    <button type="button">Поиск</button>
-</a>
-<br>
 <table>
-    <th:block th:each="shoe : ${shoes}">
+    <th:block th:each="entry : ${bucket.shoes}">
         <tr>
             <td>
-                <a th:href="'/shoe/' + ${shoe.getId()}">
-                    <b th:text="${shoe.getModelName()}"></b>
+                <a th:href="'/shoe/' + ${entry.getKey().getId()}">
+                    <b th:text="${entry.getKey().getModelName()}"></b>
                 </a>
                 <br>
-                <img th:src="${shoe.getPhotoUrl()}">
+                <img th:src="${entry.getKey().getPhotoUrl()}">
                 <br>
-                <b th:text="${shoe.getCost()}"></b>
+                <b th:text="${entry.getKey().getCost()}"></b>
+                <br>
+                <b th:text="'Количество: ' + ${entry.getValue()}"></b>
+                <br>
+                <a th:href="'/order/bucket/add/' + ${entry.getKey().getId()}">
+                    <button type="button">+</button>
+                </a>
+                <a th:href="'/order/bucket/subtract/' + ${entry.getKey().getId()}">
+                    <button type="button">-</button>
+                </a>
             </td>
         </tr>
     </th:block>

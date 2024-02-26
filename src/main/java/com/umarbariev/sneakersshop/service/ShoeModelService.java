@@ -31,4 +31,10 @@ public class ShoeModelService {
                                   .collect(Collectors.toList());
     }
 
+    public DShoeModelDto getShoeById(Long id) {
+        return shoeModelMapper.fromEntity(shoeModelRepository.findById(id)
+                                                             .orElseThrow(() -> new IllegalArgumentException(String.format(
+                                                                 "Не найдено обуви с id = %s",
+                                                                 id))));
+    }
 }

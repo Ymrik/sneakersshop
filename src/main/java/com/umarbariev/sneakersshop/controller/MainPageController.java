@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -130,5 +131,12 @@ public class MainPageController {
         model.addAttribute("shoes", shoeModelList);
         model.addAttribute("searchCriteria", searchCriteria);
         return "content";
+    }
+
+    @GetMapping("/shoe/{id}")
+    public String getShoeModelPage(@PathVariable Long id, Model model) {
+        DShoeModelDto shoeModelDto = shoeModelService.getShoeById(id);
+        model.addAttribute("shoe", shoeModelDto);
+        return "model-info";
     }
 }

@@ -38,6 +38,9 @@
   </a>
 </div>
 <div sec:authorize="isAuthenticated()">
+    <a href="/order/bucket">
+        <button type="button">Корзина</button>
+    </a>
   <span sec:authentication="name">Bob</span>
   <a href="/account">
     <button type="button">Личный кабинет</button>
@@ -67,11 +70,18 @@
   <th:block th:each="shoe : ${shoes}">
     <tr>
       <td>
-        <b th:text="${shoe.getModelName()}"></b>
+          <a th:href="'/shoe/' + ${shoe.getId()}">
+              <b th:text="${shoe.getModelName()}"></b>
+          </a>
         <br>
         <img th:src="${shoe.getPhotoUrl()}">
         <br>
         <b th:text="${shoe.getCost()}"></b>
+          <div sec:authorize="isAuthenticated()">
+              <a th:href="'/order/add-to-bucket/' + ${shoe.getId()}">
+                  <button type="button">Добавить в корзину</button>
+              </a>
+          </div>
       </td>
     </tr>
   </th:block>

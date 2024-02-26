@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>MainPage</title>
+</head>
+<body>
+<a href="/">
+  <button type="button">Главная</button>
+</a>
+<a href="/men">
+  <button type="button">Мужчинам</button>
+</a>
+<a href="/women">
+  <button type="button">Женщинам</button>
+</a>
+<a href="/children">
+  <button type="button">Детям</button>
+</a>
+<a href="/winter">
+  <button type="button">Зима</button>
+</a>
+<a href="/summer">
+  <button type="button">Лето</button>
+</a>
+<a href="/spring">
+  <button type="button">Весна/Осень</button>
+</a>
+<a href="/demi">
+  <button type="button">Демисезон</button>
+</a>
+<div sec:authorize="!isAuthenticated()">
+  <a href="/login">
+    <button type="button">Войти</button>
+  </a>
+  <a href="/registration">
+    <button type="button">Регистрация</button>
+  </a>
+</div>
+<div sec:authorize="isAuthenticated()">
+  <span sec:authentication="name">Bob</span>
+  <a href="/account">
+    <button type="button">Личный кабинет</button>
+  </a>
+  <a href="/logout">
+    <button type="button">Выйти</button>
+  </a>
+</div>
+<img th:src="${shoe.getPhotoUrl()}">
+<br>
+<label th:text="'Название модели: ' + ${shoe.getModelName()}"></label>
+<br>
+<label th:text="'Название бренда: ' + ${shoe.getBrand()}"></label>
+<br>
+<label th:text="'Категория: ' + ${shoe.getCategory()}"></label>
+<br>
+<label th:text="'Пол: ' + ${shoe.getSex()}"></label>
+<br>
+<label th:text="'Сезон: ' + ${shoe.getSeasons()}"></label>
+<br>
+<label th:text="'Примиум: ' + ${shoe.getIsPremium() == true ? 'Да': 'Нет'}"></label>
+<br>
+<label th:text="'Стоимость: ' + ${shoe.getCost()}"></label>
+<br>
+<label th:text="'Описание: ' + ${shoe.getDescription()}"></label>
+</body>
+</html>
