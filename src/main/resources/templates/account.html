@@ -53,5 +53,14 @@
 <label th:text="'Почта: ' + ${client.email}"></label>
 <br>
 <label th:text="'Адрес доставки: ' + ${client.deliveryAddress}"></label>
+<br>
+<a href="/client/edit">
+  <button type="button">Изменить данные</button>
+</a>
+<br>
+<br>
+<a href="/client/orders">
+  <button type="button">Мои заказы</button>
+</a>
 </body>
 </html>

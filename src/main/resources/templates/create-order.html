@@ -8,35 +8,6 @@
 <a href="/">
     <button type="button">Главная</button>
 </a>
-<a href="/men">
-    <button type="button">Мужчинам</button>
-</a>
-<a href="/women">
-    <button type="button">Женщинам</button>
-</a>
-<a href="/children">
-    <button type="button">Детям</button>
-</a>
-<a href="/winter">
-    <button type="button">Зима</button>
-</a>
-<a href="/summer">
-    <button type="button">Лето</button>
-</a>
-<a href="/spring">
-    <button type="button">Весна/Осень</button>
-</a>
-<a href="/demi">
-    <button type="button">Демисезон</button>
-</a>
-<div sec:authorize="!isAuthenticated()">
-    <a href="/login">
-        <button type="button">Войти</button>
-    </a>
-    <a href="/registration">
-        <button type="button">Регистрация</button>
-    </a>
-</div>
 <div sec:authorize="isAuthenticated()">
     <a href="/order/bucket">
         <button type="button">Корзина</button>
@@ -51,7 +22,7 @@
 </div>
 <br>
 <table>
-    <th:block th:each="entry : ${bucket.shoes}">
+    <th:block th:each="entry : ${createOrder.bucket.shoes}">
         <tr>
             <td>
                 <a th:href="'/shoe/' + ${entry.getKey().getId()}">
@@ -74,8 +45,18 @@
         </tr>
     </th:block>
 </table>
-<a href="/order/create">
-    <button type="button">Создать заказ</button>
-</a>
+<form action="#" th:action="@{/order/create}" method="post" th:object="${createOrder}">
+    <fieldset>
+        <legend>Пожалуйста, введите адрес доставки</legend>
+        <label for="address">Адрес</label>
+        <input type="text" id="address" th:field="*{address}"/>
+
+        <input type="hidden" th:field="*{username}">
+
+        <div class="form-actions">
+            <button type="submit" class="btn">Сделать заказ</button>
+        </div>
+    </fieldset>
+</form>
 </body>
 </html>

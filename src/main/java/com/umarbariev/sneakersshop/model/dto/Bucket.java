@@ -29,4 +29,10 @@ public class Bucket {
 
         shoes.compute(shoeModelDto, (k,v) -> v == null ? 0L : v - count);
     }
+
+    @Override
+    public String toString() {
+        return shoes.toString();
+    }
+
 }

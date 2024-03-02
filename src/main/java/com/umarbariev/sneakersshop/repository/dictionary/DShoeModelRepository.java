@@ -9,10 +9,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DShoeModelRepository extends JpaRepository<ShoeModelEntity, Long>, JpaSpecificationExecutor<ShoeModelEntity> {
     Page<ShoeModelEntity> findAll(Specification<ShoeModelEntity> spec, Pageable pageable);
 
     List<ShoeModelEntity> findAll(Specification<ShoeModelEntity> spec);
+
+    ShoeModelEntity getById(Long id);
 }

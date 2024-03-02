@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_count_to_shoes_in_stock
+      author: Umar
+      changes:
+        - addColumn:
+            tableName: shoes_in_stock
+            columns:
+              - column:
+                  name: count
+                  type: int8
+                  constraints:
+                    nullable: true

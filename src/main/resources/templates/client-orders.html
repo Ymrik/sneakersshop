@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="UTF-8">
-  <title>MainPage</title>
+  <title>Аккаунт</title>
+  <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet" />
 </head>
 <body>
 <a href="/">
@@ -39,29 +40,34 @@
 </div>
 <div sec:authorize="isAuthenticated()">
   <span sec:authentication="name">Bob</span>
-  <a href="/client/account">
-    <button type="button">Личный кабинет</button>
-  </a>
   <a href="/logout">
     <button type="button">Выйти</button>
   </a>
 </div>
-<img th:src="${shoe.getPhotoUrl()}">
 <br>
-<label th:text="'Название модели: ' + ${shoe.getModelName()}"></label>
-<br>
-<label th:text="'Название бренда: ' + ${shoe.getBrand()}"></label>
-<br>
-<label th:text="'Категория: ' + ${shoe.getCategory()}"></label>
-<br>
-<label th:text="'Пол: ' + ${shoe.getSex()}"></label>
-<br>
-<label th:text="'Сезон: ' + ${shoe.getSeasons()}"></label>
-<br>
-<label th:text="'Примиум: ' + ${shoe.getIsPremium() == true ? 'Да': 'Нет'}"></label>
-<br>
-<label th:text="'Стоимость: ' + ${shoe.getCost()}"></label>
-<br>
-<label th:text="'Описание: ' + ${shoe.getDescription()}"></label>
+<ul>
+  <li th:each="clientOrder : ${clientOrders}">
+    <b th:text="'ИД заказа: ' + ${clientOrder.getOrderId()}"></b>
+    <br>
+    <b th:text="'Адрес доставки: ' + ${clientOrder.getDeliveryAddress()}"></b>
+    <br>
+    <b th:text="'Статус: ' + ${clientOrder.getOrderStatus()}"></b>
+    <br>
+    <table >
+      <tr>
+        <th>Название модели</th>
+        <th>Количество</th>
+        <th>Фото</th>
+      </tr>
+      <tr th:each="orderShoe : ${clientOrder.getOrderShoes()}">
+        <td th:text="${orderShoe.getShoeModelDto().getModelName()}"></td>
+        <td th:text="${orderShoe.getCount()}"></td>
+        <td>
+          <img th:src="${orderShoe.getShoeModelDto().getPhotoUrl()}" style="width:150px;height:160px;">
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
 </body>
 </html>

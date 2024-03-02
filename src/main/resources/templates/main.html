@@ -42,7 +42,7 @@
         <button type="button">Корзина</button>
     </a>
     <span sec:authentication="name">Bob</span>
-    <a href="/account">
+    <a href="/client/account">
         <button type="button">Личный кабинет</button>
     </a>
     <a href="/logout">
@@ -65,6 +65,11 @@
                 <img th:src="${shoe.getPhotoUrl()}">
                 <br>
                 <b th:text="${shoe.getCost()}"></b>
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="'/order/add-to-bucket/' + ${shoe.getId()}">
+                        <button type="button">Добавить в корзину</button>
+                    </a>
+                </div>
             </td>
         </tr>
     </th:block>

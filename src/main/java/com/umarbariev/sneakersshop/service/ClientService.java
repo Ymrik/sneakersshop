@@ -36,13 +36,18 @@ public class ClientService {
     }
 
     public ClientDto getClient(String username) {
+        ClientEntity client = getClientEntity(username);
+
+        return clientMapper.fromEntity(client);
+    }
+
+    public ClientEntity getClientEntity(String username) {
         UserEntity user = userRepository.findByUsername(username);
         if (user == null) {
             throw new IllegalArgumentException(String.format("Не найден пользователь %s", username));
         }
-        ClientEntity client = clientRepository.findByUser(user).orElseThrow(() -> new UsernameNotFoundException(String.format("Не найден пользователь %s", username)));
 
-        return clientMapper.fromEntity(client);
+        return clientRepository.findByUser(user).orElseThrow(() -> new UsernameNotFoundException(String.format("Не найден пользователь %s", username)));
     }
 
 
