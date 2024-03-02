@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Изменить учетные данные</title>
+</head>
+<body>
+<form action="#" th:action="@{/client/edit}" method="post" th:object="${client}">
+  <fieldset>
+    <legend>Пожалуйста, введите учетные данные</legend>
+    <input type="hidden" id="username" th:field="*{username}"/>
+
+    <label for="name">Имя</label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <p class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
+    <label for="lastname">Фамилия</label>
+    <input type="text" id="lastname" th:field="*{lastName}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+
+    <label for="sex">Пол</label>
+    <select th:field="*{sex}" id="sex">
+      <option th:value="'M'" th:text="Мужчина"></option>
+      <option th:value="'F'" th:text="Женщина"></option>
+    </select>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"></div>
+
+    <label for="birthdate">Дата рождения</label>
+    <input type="date" id="birthdate" th:field="*{birthdate}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+
+    <label for="phoneNumber">Номер телефона</label>
+    <input type="text" id="phoneNumber" th:field="*{phoneNumber}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+
+    <label for="email">Электронная почта</label>
+    <input type="text" id="email" th:field="*{email}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+    <label for="address">Адрес доставки</label>
+    <input type="text" id="address" th:field="*{deliveryAddress}"/>
+    <div class="alert alert-warning" th:if="${#fields.hasErrors('deliveryAddress')}" th:errors="*{deliveryAddress}"></div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn">Сохранить</button>
+    </div>
+  </fieldset>
+</form>
+</body>
+</html>

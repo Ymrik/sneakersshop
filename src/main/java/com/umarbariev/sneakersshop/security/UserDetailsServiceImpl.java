@@ -1,6 +1,7 @@
 package com.umarbariev.sneakersshop.security;
 
 import com.umarbariev.sneakersshop.mapper.UserMapper;
+import com.umarbariev.sneakersshop.model.dto.UpdateUserPasswordDto;
 import com.umarbariev.sneakersshop.model.dto.UserDto;
 import com.umarbariev.sneakersshop.model.entity.Role;
 import com.umarbariev.sneakersshop.model.entity.UserEntity;
@@ -13,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -66,5 +69,34 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return userMapper.fromEntity(user);
+    }
+
+    public UserEntity loadUserEntityByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new RuntimeException("Not found user with username " + username);
+        }
+
+        return user;
+    }
+
+    public void updateUser(UpdateUserPasswordDto updateUserPasswordDto, Principal principal) {
+        String oldPassword = updateUserPasswordDto.getOldPassword();
+        String newPassword1 = updateUserPasswordDto.getNewPassword();
+        String newPassword2 = updateUserPasswordDto.getNewPassword2();
+        UserEntity user = loadUserEntityByUsername(principal.getName());
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new RuntimeException("Неверный старый пароль");
+        }
+        if (!newPassword1.equals(newPassword2)) {
+            throw new RuntimeException("Новые пароли не совпадают");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword1));
+        updateUser(user);
+    }
+
+    public void updateUser(UserEntity user) {
+        userRepository.save(user);
     }
 }

@@ -39,6 +39,9 @@
   </a>
 </div>
 <div sec:authorize="isAuthenticated()">
+  <a href="/client/account">
+    <button type="button">Личный кабинет</button>
+  </a>
   <span sec:authentication="name">Bob</span>
   <a href="/logout">
     <button type="button">Выйти</button>

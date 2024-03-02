@@ -35,6 +35,14 @@ public class ClientService {
         clientRepository.save(entity);
     }
 
+    @Transactional
+    public void updateClient(ClientDto clientDto) {
+        String username = clientDto.getUsername();
+        ClientEntity clientEntity = getClientEntity(username);
+        fillCommonFields(clientEntity, clientDto);
+        clientRepository.save(clientEntity);
+    }
+
     public ClientDto getClient(String username) {
         ClientEntity client = getClientEntity(username);
 
@@ -53,19 +61,23 @@ public class ClientService {
 
     private ClientEntity fillCommonFromDto(ClientDto clientDto) {
         ClientEntity clientEntity = new ClientEntity();
-        clientEntity.setName(clientDto.getName());
-        clientEntity.setLastName(clientDto.getLastName());
+        fillCommonFields(clientEntity, clientDto);
+        return clientEntity;
+    }
+
+    private void fillCommonFields(ClientEntity entity, ClientDto clientDto) {
+        entity.setName(clientDto.getName());
+        entity.setLastName(clientDto.getLastName());
 
         Optional<SexEntity> sexOpt = sexRepository.findByCode(clientDto.getSex());
         if (sexOpt.isEmpty()) {
             throw new IllegalArgumentException(String.format("Неверно указан пол: %s", clientDto.getSex()));
         }
 
-        clientEntity.setSex(sexOpt.get());
-        clientEntity.setBirthdate(new Date(clientDto.getBirthdate().getTime()));
-        clientEntity.setPhoneNumber(clientDto.getPhoneNumber());
-        clientEntity.setEmail(clientDto.getEmail());
-        clientEntity.setPreferredDeliveryAddress(clientDto.getDeliveryAddress());
-        return clientEntity;
+        entity.setSex(sexOpt.get());
+        entity.setBirthdate(new Date(clientDto.getBirthdate().getTime()));
+        entity.setPhoneNumber(clientDto.getPhoneNumber());
+        entity.setEmail(clientDto.getEmail());
+        entity.setPreferredDeliveryAddress(clientDto.getDeliveryAddress());
     }
 }
