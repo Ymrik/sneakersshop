@@ -34,7 +34,11 @@ public class OrderController {
     @GetMapping("/add-to-bucket/{shoeId}")
     public String addToBucket(@PathVariable Long shoeId, Principal principal, HttpServletRequest request) {
         bucketCache.addToBucket(principal.getName(), shoeId);
-        return "redirect:" + request.getHeader("Referer");
+        String referer = request.getHeader("Referer");
+        if (referer.contains("/login")) {
+            return "redirect:/";
+        }
+        return "redirect:" + referer;
     }
 
     @GetMapping("/bucket/add/{shoeId}")

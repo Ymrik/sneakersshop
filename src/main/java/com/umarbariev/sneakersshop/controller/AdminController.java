@@ -8,6 +8,7 @@ import com.umarbariev.sneakersshop.model.dto.dictionary.DOrderStatusDto;
 import com.umarbariev.sneakersshop.security.UserDetailsServiceImpl;
 import com.umarbariev.sneakersshop.service.ClientService;
 import com.umarbariev.sneakersshop.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,14 +71,22 @@ public class AdminController {
     }
 
     @GetMapping("/block/{username}")
-    public String blockUser(@PathVariable String username) {
+    public String blockUser(@PathVariable String username, HttpServletRequest request) {
         userDetailsService.blockUser(username);
-        return "redirect:/admin/users";
+        return "redirect:" + request.getHeader("Referer");
     }
 
     @GetMapping("/unblock/{username}")
-    public String unblockUser(@PathVariable String username) {
+    public String unblockUser(@PathVariable String username, HttpServletRequest request) {
         userDetailsService.unblockUser(username);
-        return "redirect:/admin/users";
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    @GetMapping("/client/{username}")
+    public String getClientInfo(@PathVariable String username, Model model) {
+        ClientDto clientDto = clientService.getClient(username);
+        model.addAttribute("client", clientDto);
+        model.addAttribute("searchUserOrders", new SearchUserOrderDto());
+        return "admin-client-page";
     }
 }

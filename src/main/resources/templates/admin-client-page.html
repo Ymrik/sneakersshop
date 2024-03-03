@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Пользователь</title>
+  <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<a href="/admin/">
+  <button type="button">Главная</button>
+</a>
+<label th:text="'Имя: ' + ${client.name}"></label>
+<br>
+<label th:text="'Фамилия: ' + ${client.lastName}"></label>
+<br>
+<label th:text="'Номер телефона: ' + ${client.phoneNumber}"></label>
+<br>
+<label th:text="'Почта: ' + ${client.email}"></label>
+<br>
+<label th:text="'Адрес доставки: ' + ${client.deliveryAddress}"></label>
+<br>
+<form action="#" th:action="@{/admin/orders}" method="post" th:object="${searchUserOrders}">
+  <input type="hidden" th:value="${client.username}" id="username" name="username">
+  <div class="form-actions">
+    <button type="submit" class="btn">Заказы</button>
+  </div>
+</form>
+<br>
+<a th:if="${client.getIsActive() == true}" th:href="'/admin/block/' + ${client.getUsername()}">
+  <button type="button">Заблокировать</button>
+</a>
+<a th:if="${client.getIsActive() == false}" th:href="'/admin/unblock/' + ${client.getUsername()}">
+  <button type="button">Разблокировать</button>
+</a>
+</body>
+</html>
