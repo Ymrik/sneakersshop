@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Список клиентов</title>
+</head>
+<body>
+<a href="/admin/">
+    <button type="button">Главная</button>
+</a>
+<br>
+<b>Список клиентов</b>
+<br>
+<table>
+    <tr>
+        <th>Имя пользователя</th>
+    </tr>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.getUsername()}"></td>
+        <td>
+            <a th:href="'/admin/orders/' + ${client.getUsername()}">
+                <button type="button">Заказы</button>
+            </a>
+            <a th:href="'/admin/block/' + ${client.getUsername()}">
+                <button type="button">Заблокировать</button>
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

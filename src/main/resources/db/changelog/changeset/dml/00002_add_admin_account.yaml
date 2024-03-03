@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-admin-account
+      author: Umar
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: 0
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: $2y$10$pZpzHjRNFm1W/bktkt5axOwqwBt.5fCAK368DxD8D7Yq7nNlTAtfG
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 0
+              - column:
+                  name: role_id
+                  value: 2

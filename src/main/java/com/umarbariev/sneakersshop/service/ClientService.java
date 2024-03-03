@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +49,10 @@ public class ClientService {
         ClientEntity client = getClientEntity(username);
 
         return clientMapper.fromEntity(client);
+    }
+
+    public List<ClientDto> getAllClients() {
+        return clientRepository.findAll().stream().map(clientMapper::fromEntity).collect(Collectors.toList());
     }
 
     public ClientEntity getClientEntity(String username) {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+</head>
+<body>
+<a href="/admin/">
+    <button type="button">Главная</button>
+</a>
+<b>Заказы</b>
+<br>
+<ul>
+    <li th:each="order : ${orders}">
+        <b th:text="'ИД заказа: ' + ${order.getOrderId()}"></b>
+        <br>
+        <b th:text="'Имя пользователя: ' + ${order.getClientUsername()}"></b>
+        <br>
+        <b th:text="'Адрес доставки: ' + ${order.getDeliveryAddress()}"></b>
+        <br>
+        <b th:text="'Статус: ' + ${order.getOrderStatus()}"></b>
+        <form action="#" th:action="@{/admin/orders/status}" method="post" th:object="${updateStatus}">
+            <div class="form-actions">
+                <button type="submit" class="btn">Изменить статус</button>
+            </div>
+            <input type="hidden" th:value="${order.getOrderId()}" id="orderId" name="orderId">
+            <select th:field="*{newStatusCode}" id="category">
+                <option value="">Select one...</option>
+                <option th:each="status : ${statuses}" th:value="${status.getCode()}" th:text="${status.getName()}"></option>
+            </select>
+        </form>
+        <br>
+        <table>
+            <tr>
+                <th>Название модели</th>
+                <th>Количество</th>
+                <th>Фото</th>
+            </tr>
+            <tr th:each="orderShoe : ${order.getOrderShoes()}">
+                <td th:text="${orderShoe.getShoeModelDto().getModelName()}"></td>
+                <td th:text="${orderShoe.getCount()}"></td>
+                <td>
+                    <img th:src="${orderShoe.getShoeModelDto().getPhotoUrl()}" style="width:150px;height:160px;">
+                </td>
+            </tr>
+        </table>
+    </li>
+</ul>
+</body>
+</html>

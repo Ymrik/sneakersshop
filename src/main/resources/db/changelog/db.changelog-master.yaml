@@ -11,3 +11,5 @@ databaseChangeLog:
       file: db/changelog/changeset/ddl/00004_alter_phone_number.yaml
   - include:
       file: db/changelog/changeset/ddl/00005_add_count_to_shoes_in_stock.yaml
+  - include:
+      file: db/changelog/changeset/dml/00002_add_admin_account.yaml

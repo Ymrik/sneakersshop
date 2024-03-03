@@ -1,9 +1,6 @@
 package com.umarbariev.sneakersshop.service;
 
-import com.umarbariev.sneakersshop.model.dto.Bucket;
-import com.umarbariev.sneakersshop.model.dto.ClientOrdersStatusDto;
-import com.umarbariev.sneakersshop.model.dto.CreateOrderDto;
-import com.umarbariev.sneakersshop.model.dto.OrderShoesDto;
+import com.umarbariev.sneakersshop.model.dto.*;
 import com.umarbariev.sneakersshop.model.dto.dictionary.DOrderStatusDto;
 import com.umarbariev.sneakersshop.model.dto.dictionary.DShoeModelDto;
 import com.umarbariev.sneakersshop.model.entity.ClientEntity;
@@ -21,11 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -98,6 +91,15 @@ public class OrderService {
 
     public List<ClientOrdersStatusDto> getClientOrders(String username) {
         List<OrderEntity> orders = orderRepository.getAllByClientEntity_User_Username(username);
+        return getOrdersDtoFromOrderEntities(orders);
+    }
+
+    public List<ClientOrdersStatusDto> getAllOrders() {
+        List<OrderEntity> orders = orderRepository.findAll();
+        return getOrdersDtoFromOrderEntities(orders);
+    }
+
+    private List<ClientOrdersStatusDto> getOrdersDtoFromOrderEntities(List<OrderEntity> orders) {
         if (orders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -106,7 +108,7 @@ public class OrderService {
 
         for (OrderEntity order : orders) {
             ClientOrdersStatusDto clientOrdersStatusDto = new ClientOrdersStatusDto();
-            clientOrdersStatusDto.setClientUsername(username);
+            clientOrdersStatusDto.setClientUsername(order.getClientEntity().getUser().getUsername());
             clientOrdersStatusDto.setOrderId(order.getId());
             clientOrdersStatusDto.setDeliveryAddress(order.getDeliveryAddress());
             clientOrdersStatusDto.setOrderStatus(order.getOrderStatus().getName());
@@ -114,10 +116,10 @@ public class OrderService {
 
             List<OrderShoesEntity> orderShoes = orderShoesInStockRepository.getAllByOrder_Id(order.getId());
             Map<Long, List<OrderShoesEntity>> orderShoesEntityByShoeModelId = orderShoes.stream()
-                                                                                        .collect(Collectors.groupingBy(
-                                                                                            orderShoesEntity -> orderShoesEntity.getShoes()
-                                                                                                                                .getShoeModelEntity()
-                                                                                                                                .getId()));
+                    .collect(Collectors.groupingBy(
+                            orderShoesEntity -> orderShoesEntity.getShoes()
+                                    .getShoeModelEntity()
+                                    .getId()));
             for (Map.Entry<Long, List<OrderShoesEntity>> entry : orderShoesEntityByShoeModelId.entrySet()) {
                 DShoeModelDto shoeModelDto = shoeModelService.getShoeById(entry.getKey());
                 Long shoesCount = 0L;
@@ -130,6 +132,31 @@ public class OrderService {
             resultList.add(clientOrdersStatusDto);
         }
         return resultList;
+    }
+
+    public List<DOrderStatusDto> getAllStatuses() {
+        return orderStatusRepository.findAll()
+                .stream()
+                .map(status -> new DOrderStatusDto(status.getId(), status.getCode(), status.getName(), status.getOrdinal()))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateOrderStatus(UpdateOrderStatusDto updateOrderStatusDto) {
+        Long orderId = updateOrderStatusDto.getOrderId();
+        String newStatusCode = updateOrderStatusDto.getNewStatusCode();
+
+        Optional<OrderEntity> order = orderRepository.findById(orderId);
+        if (order.isEmpty()) {
+            throw new IllegalArgumentException(String.format("Не существует заказа с ID=%s", orderId));
+        }
+        OrderEntity orderEntity = order.get();
+        Optional<OrderStatusEntity> newOrderStatus = orderStatusRepository.getByCode(newStatusCode);
+        if (newOrderStatus.isEmpty()) {
+            throw new IllegalArgumentException(String.format("Не существует статуса с code=%s", newStatusCode));
+        }
+        orderEntity.setOrderStatus(newOrderStatus.get());
+        orderRepository.save(orderEntity);
     }
 
     private void subtractCountFromShoeInStock(ShoesInStockEntity entity, Long count) {
