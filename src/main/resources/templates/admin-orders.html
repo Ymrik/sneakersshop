@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Заказы</title>
+    <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet" />
 </head>
 <body>
 <a href="/admin/">
     <button type="button">Главная</button>
 </a>
 <b>Заказы</b>
+<form action="#" th:action="@{/admin/orders}" method="post" th:object="${searchUserOrders}">
+    <select th:field="*{username}" id="username">
+        <option value="">Select one...</option>
+        <option th:each="username : ${clientsUsernames}" th:value="${username}" th:text="${username}"></option>
+    </select>
+    <div class="form-actions">
+        <button type="submit" class="btn">Фильтр по пользователю</button>
+    </div>
+</form>
 <br>
 <ul>
     <li th:each="order : ${orders}">
