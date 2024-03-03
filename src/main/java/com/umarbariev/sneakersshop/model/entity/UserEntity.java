@@ -38,4 +38,7 @@ public class UserEntity {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }

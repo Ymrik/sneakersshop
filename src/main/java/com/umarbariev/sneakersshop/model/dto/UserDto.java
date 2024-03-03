@@ -20,6 +20,7 @@ public class UserDto implements UserDetails {
     private String username;
     private String password;
     private List<SimpleGrantedAuthority> authorities;
+    private Boolean isActive;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,7 +54,7 @@ public class UserDto implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 
 }

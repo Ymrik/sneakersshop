@@ -39,4 +39,5 @@ public class ClientDto {
     private String deliveryAddress;
     @NotEmpty(message = "Поле должно быть заполненным!")
     private String password;
+    private Boolean isActive;
 }

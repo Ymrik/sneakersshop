@@ -17,12 +17,16 @@
     </tr>
     <tr th:each="client : ${clients}">
         <td th:text="${client.getUsername()}"></td>
+        <td th:text="${client.getIsActive() == true ? 'Активный' : 'Заблокирован'}"></td>
         <td>
             <a th:href="'/admin/orders/' + ${client.getUsername()}">
                 <button type="button">Заказы</button>
             </a>
-            <a th:href="'/admin/block/' + ${client.getUsername()}">
+            <a th:if="${client.getIsActive() == true}" th:href="'/admin/block/' + ${client.getUsername()}">
                 <button type="button">Заблокировать</button>
+            </a>
+            <a th:if="${client.getIsActive() == false}" th:href="'/admin/unblock/' + ${client.getUsername()}">
+                <button type="button">Разблокировать</button>
             </a>
         </td>
     </tr>

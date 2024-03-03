@@ -4,15 +4,13 @@ import com.umarbariev.sneakersshop.model.dto.ClientDto;
 import com.umarbariev.sneakersshop.model.dto.ClientOrdersStatusDto;
 import com.umarbariev.sneakersshop.model.dto.UpdateOrderStatusDto;
 import com.umarbariev.sneakersshop.model.dto.dictionary.DOrderStatusDto;
+import com.umarbariev.sneakersshop.security.UserDetailsServiceImpl;
 import com.umarbariev.sneakersshop.service.ClientService;
 import com.umarbariev.sneakersshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,7 @@ import java.util.List;
 public class AdminController {
     private final ClientService clientService;
     private final OrderService orderService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @GetMapping("/")
     public String getMainPage() {
@@ -49,5 +48,17 @@ public class AdminController {
     public String updateOrderStatus(@ModelAttribute("updateStatus") UpdateOrderStatusDto updateOrderStatusDto){
         orderService.updateOrderStatus(updateOrderStatusDto);
         return "redirect:/admin/orders";
+    }
+
+    @GetMapping("/block/{username}")
+    public String blockUser(@PathVariable String username) {
+        userDetailsService.blockUser(username);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/unblock/{username}")
+    public String unblockUser(@PathVariable String username) {
+        userDetailsService.unblockUser(username);
+        return "redirect:/admin/users";
     }
 }

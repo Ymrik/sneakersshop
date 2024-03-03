@@ -11,8 +11,10 @@ import java.util.Date;
 public interface ClientMapper {
 
     @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "password", source = "user.password")
     @Mapping(target = "sex", source = "sex.name")
     @Mapping(target = "deliveryAddress", source = "preferredDeliveryAddress")
+    @Mapping(target = "isActive", source = "user.isActive")
     ClientDto fromEntity(ClientEntity client);
 
     default Date fromSqlDate(java.sql.Date sqlDate) {

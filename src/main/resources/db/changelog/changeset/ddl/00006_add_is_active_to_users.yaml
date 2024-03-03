@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_is_active_to_users
+      author: Umar
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValue: true
+                  constraints:
+                    nullable: false

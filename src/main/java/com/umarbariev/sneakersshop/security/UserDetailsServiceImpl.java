@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
@@ -29,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     public UserEntity saveNewClientUser(String username, String password) {
-        return saveNewUser(new UserDto(username, password, List.of(new SimpleGrantedAuthority("CLIENT"))));
+        return saveNewUser(new UserDto(username, password, List.of(new SimpleGrantedAuthority("CLIENT")), true));
     }
 
     public UserEntity saveNewUser(UserDto userDto) {
@@ -79,6 +80,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return user;
+    }
+
+    @Transactional
+    public void blockUser(String username) {
+        userRepository.updateUserStatus(username, false);
+    }
+
+    @Transactional
+    public void unblockUser(String username) {
+        userRepository.updateUserStatus(username, true);
     }
 
     public void updateUser(UpdateUserPasswordDto updateUserPasswordDto, Principal principal) {
