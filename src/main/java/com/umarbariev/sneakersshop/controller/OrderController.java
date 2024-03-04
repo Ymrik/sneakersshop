@@ -68,6 +68,6 @@ public class OrderController {
     @PostMapping("/create")
     public String createOrder(@ModelAttribute("createOrder") CreateOrderDto createOrderDto) {
         orderService.createOrder(createOrderDto);
-        return null;
+        return "redirect:/client/orders";
     }
 }
