@@ -1,13 +1,11 @@
 package com.umarbariev.sneakersshop.controller;
 
-import com.umarbariev.sneakersshop.model.dto.ClientDto;
-import com.umarbariev.sneakersshop.model.dto.ClientOrdersStatusDto;
-import com.umarbariev.sneakersshop.model.dto.SearchUserOrderDto;
-import com.umarbariev.sneakersshop.model.dto.UpdateOrderStatusDto;
+import com.umarbariev.sneakersshop.model.dto.*;
+import com.umarbariev.sneakersshop.model.dto.dictionary.DBrandDto;
+import com.umarbariev.sneakersshop.model.dto.dictionary.DCategoryDto;
 import com.umarbariev.sneakersshop.model.dto.dictionary.DOrderStatusDto;
 import com.umarbariev.sneakersshop.security.UserDetailsServiceImpl;
-import com.umarbariev.sneakersshop.service.ClientService;
-import com.umarbariev.sneakersshop.service.OrderService;
+import com.umarbariev.sneakersshop.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,6 +21,9 @@ public class AdminController {
     private final ClientService clientService;
     private final OrderService orderService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final ShoeModelService shoeModelService;
+    private final BrandService brandService;
+    private final CategoryService categoryService;
 
     @GetMapping("/")
     public String getMainPage() {
@@ -88,5 +88,59 @@ public class AdminController {
         model.addAttribute("client", clientDto);
         model.addAttribute("searchUserOrders", new SearchUserOrderDto());
         return "admin-client-page";
+    }
+
+    @GetMapping("/data")
+    public String getDatabase(Model model) {
+        List<ShoeModelInStockInfo> shoeModelInStockInfos = shoeModelService.getShoeModelInStockInfos();
+        model.addAttribute("shoesInfo", shoeModelInStockInfos);
+        return "admin-shoes-data";
+    }
+
+    @GetMapping("data/shoe/edit/{shoeId}")
+    public String editShoe(@PathVariable Long shoeId, Model model) {
+        EditShoeDto editShoeDto = shoeModelService.getEditShoeDto(shoeId);
+        List<DBrandDto> brands = brandService.getAllBrands();
+        List<DCategoryDto> categories = categoryService.getAllCategories();
+
+        model.addAttribute("editShoe", editShoeDto);
+        model.addAttribute("brands", brands);
+        model.addAttribute("categories", categories);
+        return "admin-edit-shoe";
+    }
+
+    @GetMapping("/data/shoe/add")
+    public String addNewShoe(Model model) {
+        List<DBrandDto> brands = brandService.getAllBrands();
+        List<DCategoryDto> categories = categoryService.getAllCategories();
+
+        model.addAttribute("editShoe", new EditShoeDto());
+        model.addAttribute("brands", brands);
+        model.addAttribute("categories", categories);
+        return "admin-edit-shoe";
+    }
+
+    @PostMapping("/shoe/edit")
+    public String saveShoeInfo(@ModelAttribute("editShoe") EditShoeDto editShoeDto) {
+        shoeModelService.saveOrUpdateShoe(editShoeDto);
+        return "redirect:/admin/data";
+    }
+
+    @GetMapping("/shoe/delete/{shoeId}")
+    public String deleteShoe(@PathVariable Long shoeId) {
+        shoeModelService.deleteShoe(shoeId);
+        return "redirect:/admin/data";
+    }
+
+    @GetMapping("/brand/add")
+    public String addBrandPage(Model model) {
+        model.addAttribute("addBrand", new AddBrandDto());
+        return "admin-add-brand";
+    }
+
+    @PostMapping("/brand/add")
+    public String addBrandPage(@ModelAttribute("addBrand") AddBrandDto addBrandDto, HttpServletRequest request) {
+        brandService.saveNewBrand(addBrandDto);
+        return "redirect:" + request.getHeader("Referer");
     }
 }

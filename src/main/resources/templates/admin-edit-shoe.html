@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить данные об обуви</title>
+    <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet" />
+</head>
+<body>
+<a href="/admin/">
+    <button type="button">Главная</button>
+</a>
+<a href="/logout">
+    <button type="button">Выйти</button>
+</a>
+<br>
+<br>
+<form action="#" th:action="@{/admin/shoe/edit}" method="post" th:object="${editShoe}">
+    <fieldset>
+        <legend>Пожалуйста, введите параметры модели</legend>
+
+        <input type="hidden" th:field="*{id}">
+
+        <label for="modelName">Название модели</label>
+        <input type="text" id="modelName" th:field="*{modelName}"/>
+
+        <label for="brand">Бренд</label>
+        <select th:field="*{brandCode}" id="brand">
+            <option value="">Select one...</option>
+            <option th:each="brand : ${brands}" th:value="${brand.getCode()}" th:text="${brand.getName()}"></option>
+        </select>
+
+        <a href="/admin/brand/add">
+            <button type="button">Добавить бренд</button>
+        </a>
+
+        <label for="category">Категория</label>
+        <select th:field="*{categoryCode}" id="category">
+            <option value="">Select one...</option>
+            <option th:each="category : ${categories}" th:value="${category.getCode()}" th:text="${category.getName()}"></option>
+        </select>
+
+        <label for="sex">Пол</label>
+        <select th:field="*{sexCode}" id="sex">
+            <option value="">Select one...</option>
+            <option th:value="'M'" th:text="Мужчина"></option>
+            <option th:value="'F'" th:text="Женщина"></option>
+        </select>
+
+        <label for="cost">Цена</label>
+        <input type="text" id="cost" th:field="*{cost}"/>
+
+        <label for="isPremium">Премиум</label>
+        <input type="checkbox" id="isPremium" name="isPremium" th:checked="*{isPremium}"/>
+
+        <select th:field="*{isAdult}">
+            <option value="">Select one...</option>
+            <option th:value="true">Взрослая коллекция</option>
+            <option th:value="false">Детская коллекция</option>
+        </select>
+
+        <label for="season">Сезон</label>
+        <select th:field="*{seasonCode}" id="season">
+            <option value="">Select one...</option>
+            <option th:value="'WINTER'" th:text="Зима"></option>
+            <option th:value="'SUMMER'" th:text="Лето"></option>
+            <option th:value="'AUT/SPR'" th:text="Весна-Осень"></option>
+            <option th:value="'DEMI'" th:text="Демисезон"></option>
+        </select>
+
+        <label for="description">Описание</label>
+        <input type="text" id="description" th:field="*{description}"/>
+
+        <label for="photo">Фото</label>
+        <input type="text" id="photo" th:field="*{photoUrl}"/>
+
+        <label for="countInFirstStock">Количество на складе Томск, ул. Карташова, 40А</label>
+        <input type="text" id="countInFirstStock" th:field="*{countInFirstStock}"/>
+
+        <label for="countInSecondStock">Количество на складе Томск, пр. Фрунзе, 105</label>
+        <input type="text" id="countInSecondStock" th:field="*{countInSecondStock}"/>
+
+        <a th:href="'/admin/shoe/delete/' + ${editShoe.getId()}">
+            <button type="button">Удалить</button>
+        </a>
+
+        <div class="form-actions">
+            <button type="submit" class="btn">Сохранить</button>
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>

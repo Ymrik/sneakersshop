@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>База данных</title>
+    <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet" />
+</head>
+<body>
+<a href="/admin/">
+    <button type="button">Главная</button>
+</a>
+<a href="/logout">
+    <button type="button">Выйти</button>
+</a>
+<br>
+<a href="/admin/data/shoe/add">
+    <button type="button">Добавить</button>
+</a>
+<br>
+<table>
+    <tr>
+        <th>Название модели</th>
+        <th>Бренд</th>
+        <th>Категория</th>
+        <th>Пол</th>
+        <th>Цена</th>
+        <th>Премиум</th>
+        <th>Детская коллекция</th>
+        <th>Сезон</th>
+        <th>Количество</th>
+        <th>Фото</th>
+    </tr>
+    <tr th:each="shoeInfo : ${shoesInfo}">
+        <td th:text="${shoeInfo.getShoeModelDto().getModelName()}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getBrand()}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getCategory()}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getSex()}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getCost()}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getIsPremium() == true ? 'Да' : 'Нет'}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getIsAdult() == true ? 'Нет' : 'Да'}"></td>
+        <td th:text="${shoeInfo.getShoeModelDto().getSeasons()}"></td>
+        <td>
+            <b th:if="${shoeInfo.getCountByStock().isEmpty() == true}">Нет на складе</b>
+            <ul th:if="${shoeInfo.getCountByStock().isEmpty() == false}">
+                <li th:each="count : ${shoeInfo.getCountByStock()}">
+                    <b th:text="${count.getKey() + ':' + count.getValue() + ' штук'}"></b>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <img th:src="${shoeInfo.getShoeModelDto().getPhotoUrl()}" style="width:150px;height:160px;">
+        </td>
+        <td>
+            <a th:href="'/admin/data/shoe/edit/' + ${shoeInfo.getShoeModelDto().getId()}">
+                <button type="button">Изменить</button>
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

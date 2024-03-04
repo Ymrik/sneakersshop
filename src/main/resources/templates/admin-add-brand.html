@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавить бренд</title>
+  <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet" />
+</head>
+<body>
+<a href="/admin/">
+  <button type="button">Главная</button>
+</a>
+<a href="/logout">
+  <button type="button">Выйти</button>
+</a>
+<br>
+<br>
+<form action="#" th:action="@{/admin/brand/add}" method="post" th:object="${addBrand}">
+  <fieldset>
+    <legend>Пожалуйста, введите параметры брендп</legend>
+
+    <label for="name">Название бренда</label>
+    <input type="text" id="name" th:field="*{name}"/>
+
+    <label for="code">Код бренда</label>
+    <input type="text" id="code" th:field="*{code}"/>
+
+    <label for="description">Описание</label>
+    <input type="text" id="description" th:field="*{description}"/>
+
+    <label for="photo">Фото</label>
+    <input type="text" id="photo" th:field="*{photoUrl}"/>
+
+    <div class="form-actions">
+      <button type="submit" class="btn">Сохранить</button>
+    </div>
+  </fieldset>
+</form>
+</body>
+</html>
