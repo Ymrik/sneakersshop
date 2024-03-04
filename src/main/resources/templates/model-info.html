@@ -63,5 +63,14 @@
 <label th:text="'Стоимость: ' + ${shoe.getCost()}"></label>
 <br>
 <label th:text="'Описание: ' + ${shoe.getDescription()}"></label>
+<br>
+<div sec:authorize="isAuthenticated()">
+  <a th:href="'/client/favourites/add/' + ${shoe.getId()}">
+    <button type="button">Добавить в избранное</button>
+  </a>
+  <a th:href="'/order/bucket/add/' + ${shoe.getId()}">
+    <button type="button">Добавить в корзину</button>
+  </a>
+</div>
 </body>
 </html>

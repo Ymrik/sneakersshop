@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>MainPage</title>
+    <title>Избранное</title>
+    <link th:href="@{/styles/cssandjs/style.css}" rel="stylesheet" />
 </head>
 <body>
 <a href="/">
@@ -53,12 +54,8 @@
     </a>
 </div>
 <br>
-<a href="/searchPage">
-    <button type="button">Поиск</button>
-</a>
-<br>
 <table>
-    <th:block th:each="shoe : ${shoes}">
+    <th:block th:each="shoe : ${clientFavourites.getShoeModels()}">
         <tr>
             <td>
                 <a th:href="'/shoe/' + ${shoe.getId()}">
@@ -72,8 +69,8 @@
                     <a th:href="'/order/add-to-bucket/' + ${shoe.getId()}">
                         <button type="button">Добавить в корзину</button>
                     </a>
-                    <a th:href="'/client/favourites/add/' + ${shoe.getId()}">
-                        <button type="button">Добавить в избранное</button>
+                    <a th:href="'/client/favourites/delete/' + ${shoe.getId()}">
+                        <button type="button">Удалить из избранного</button>
                     </a>
                 </div>
             </td>

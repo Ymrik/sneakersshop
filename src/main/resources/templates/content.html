@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="UTF-8">
-  <title>MainPage</title>
+  <title>Обувь</title>
 </head>
 <body>
 <a href="/">
@@ -45,7 +45,10 @@
   <a href="/client/account">
     <button type="button">Личный кабинет</button>
   </a>
-  <a href="/logout">
+    <a href="/client/favourites">
+        <button type="button">Избранное</button>
+    </a>
+    <a href="/logout">
     <button type="button">Выйти</button>
   </a>
 </div>
@@ -74,12 +77,15 @@
               <b th:text="${shoe.getModelName()}"></b>
           </a>
         <br>
-        <img th:src="${shoe.getPhotoUrl()}">
+        <img th:src="${shoe.getPhotoUrl()}" style="width:150px;height:160px;">
         <br>
         <b th:text="${shoe.getCost()}"></b>
           <div sec:authorize="isAuthenticated()">
               <a th:href="'/order/add-to-bucket/' + ${shoe.getId()}">
                   <button type="button">Добавить в корзину</button>
+              </a>
+              <a th:href="'/client/favourites/add/' + ${shoe.getId()}">
+                  <button type="button">Добавить в избранное</button>
               </a>
           </div>
       </td>

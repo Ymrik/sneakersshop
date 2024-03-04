@@ -1,23 +1,18 @@
 package com.umarbariev.sneakersshop.controller;
 
-import com.umarbariev.sneakersshop.model.dto.ClientDto;
-import com.umarbariev.sneakersshop.model.dto.ClientOrdersStatusDto;
-import com.umarbariev.sneakersshop.model.dto.UpdateUserPasswordDto;
-import com.umarbariev.sneakersshop.model.dto.UserDto;
+import com.umarbariev.sneakersshop.model.dto.*;
 import com.umarbariev.sneakersshop.model.entity.UserEntity;
 import com.umarbariev.sneakersshop.security.UserDetailsServiceImpl;
 import com.umarbariev.sneakersshop.service.ClientService;
 import com.umarbariev.sneakersshop.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -80,5 +75,30 @@ public class ClientController {
             return changePassword(principal, model);
         }
         return "redirect:/logout";
+    }
+
+    @GetMapping("/favourites/add/{shoeId}")
+    public String addToFavourites(@PathVariable Long shoeId, Principal principal, HttpServletRequest request) {
+        String username = principal.getName();
+        clientService.addShoeToFavourite(username, shoeId);
+        String referer = request.getHeader("Referer");
+        if (referer.contains("/login")) {
+            return "redirect:/";
+        }
+        return "redirect:" + referer;
+    }
+
+    @GetMapping("/favourites/delete/{shoeId}")
+    public String deleteFromFavourites(@PathVariable Long shoeId, Principal principal, HttpServletRequest request) {
+        String username = principal.getName();
+        clientService.deleteShoeFromFavourites(username, shoeId);
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    @GetMapping("/favourites")
+    public String getFavourites(Model model, Principal principal) {
+        ClientFavouritesDto clientFavouritesDto = clientService.getClientFavourites(principal.getName());
+        model.addAttribute("clientFavourites", clientFavouritesDto);
+        return "client-favourites";
     }
 }

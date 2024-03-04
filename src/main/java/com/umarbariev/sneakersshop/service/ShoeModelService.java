@@ -77,6 +77,10 @@ public class ShoeModelService {
         return resultList;
     }
 
+    public ShoeModelEntity getShoeModelEntity(Long id) {
+        return shoeModelRepository.getById(id);
+    }
+
     @Transactional
     public void deleteShoe(Long shoeId) {
         if (orderShoesInStockRepository.existActiveOrdersWithGivenShoeId(shoeId)) {
